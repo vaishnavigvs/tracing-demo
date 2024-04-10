@@ -1,0 +1,136 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Reviews
+  fields:
+    - name: created_at
+      type: Timestamptz!
+    - name: id
+      type: Uuid!
+    - name: is_visible
+      type: Bool!
+    - name: product_id
+      type: Uuid!
+    - name: rating
+      type: Int4!
+    - name: text
+      type: Text!
+    - name: updated_at
+      type: Timestamptz!
+    - name: user_id
+      type: Uuid!
+  graphql:
+    typeName: Db1_Reviews
+    inputTypeName: Db1_ReviewsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: app_connector
+      dataConnectorObjectType: reviews
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Reviews
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - created_at
+          - id
+          - is_visible
+          - product_id
+          - rating
+          - text
+          - updated_at
+          - user_id
+
+---
+kind: ObjectBooleanExpressionType
+version: v1
+definition:
+  name: ReviewsBoolExp
+  objectType: Reviews
+  dataConnectorName: app_connector
+  dataConnectorObjectType: reviews
+  comparableFields:
+    - fieldName: created_at
+      operators:
+        enableAll: true
+    - fieldName: id
+      operators:
+        enableAll: true
+    - fieldName: is_visible
+      operators:
+        enableAll: true
+    - fieldName: product_id
+      operators:
+        enableAll: true
+    - fieldName: rating
+      operators:
+        enableAll: true
+    - fieldName: text
+      operators:
+        enableAll: true
+    - fieldName: updated_at
+      operators:
+        enableAll: true
+    - fieldName: user_id
+      operators:
+        enableAll: true
+  graphql:
+    typeName: Db1_ReviewsBoolExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Reviews
+  objectType: Reviews
+  source:
+    dataConnectorName: app_connector
+    collection: reviews
+  filterExpressionType: ReviewsBoolExp
+  orderableFields:
+    - fieldName: created_at
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: is_visible
+      orderByDirections:
+        enableAll: true
+    - fieldName: product_id
+      orderByDirections:
+        enableAll: true
+    - fieldName: rating
+      orderByDirections:
+        enableAll: true
+    - fieldName: text
+      orderByDirections:
+        enableAll: true
+    - fieldName: updated_at
+      orderByDirections:
+        enableAll: true
+    - fieldName: user_id
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: db1_reviews
+    selectUniques:
+      - queryRootField: db1_reviewsById
+        uniqueIdentifier:
+          - id
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Reviews
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

@@ -1,0 +1,118 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: CartItems
+  fields:
+    - name: cart_id
+      type: Uuid!
+    - name: created_at
+      type: Timestamptz
+    - name: id
+      type: Uuid!
+    - name: product_id
+      type: Uuid!
+    - name: quantity
+      type: Int4!
+    - name: updated_at
+      type: Timestamptz
+  graphql:
+    typeName: Db1_CartItems
+    inputTypeName: Db1_CartItemsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: app_connector
+      dataConnectorObjectType: cart_items
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: CartItems
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - cart_id
+          - created_at
+          - id
+          - product_id
+          - quantity
+          - updated_at
+
+---
+kind: ObjectBooleanExpressionType
+version: v1
+definition:
+  name: CartItemsBoolExp
+  objectType: CartItems
+  dataConnectorName: app_connector
+  dataConnectorObjectType: cart_items
+  comparableFields:
+    - fieldName: cart_id
+      operators:
+        enableAll: true
+    - fieldName: created_at
+      operators:
+        enableAll: true
+    - fieldName: id
+      operators:
+        enableAll: true
+    - fieldName: product_id
+      operators:
+        enableAll: true
+    - fieldName: quantity
+      operators:
+        enableAll: true
+    - fieldName: updated_at
+      operators:
+        enableAll: true
+  graphql:
+    typeName: Db1_CartItemsBoolExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: CartItems
+  objectType: CartItems
+  source:
+    dataConnectorName: app_connector
+    collection: cart_items
+  filterExpressionType: CartItemsBoolExp
+  orderableFields:
+    - fieldName: cart_id
+      orderByDirections:
+        enableAll: true
+    - fieldName: created_at
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: product_id
+      orderByDirections:
+        enableAll: true
+    - fieldName: quantity
+      orderByDirections:
+        enableAll: true
+    - fieldName: updated_at
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: db1_cartItems
+    selectUniques:
+      - queryRootField: db1_cartItemsById
+        uniqueIdentifier:
+          - id
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: CartItems
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

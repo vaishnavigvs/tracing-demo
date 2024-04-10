@@ -1,0 +1,10 @@
+version: v1
+project: working-gopher-4021
+subgraphs:
+  DB1:
+    path: DB1
+  DB2:
+    path: DB2
+  DB_apsouth:
+    path: DB_apsouth
+defaultSupergraphManifest: base

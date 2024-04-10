@@ -1,0 +1,82 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Categories
+  fields:
+    - name: id
+      type: Uuid!
+    - name: name
+      type: Text!
+  graphql:
+    typeName: Db1_Categories
+    inputTypeName: Db1_CategoriesInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: app_connector
+      dataConnectorObjectType: categories
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Categories
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - name
+
+---
+kind: ObjectBooleanExpressionType
+version: v1
+definition:
+  name: CategoriesBoolExp
+  objectType: Categories
+  dataConnectorName: app_connector
+  dataConnectorObjectType: categories
+  comparableFields:
+    - fieldName: id
+      operators:
+        enableAll: true
+    - fieldName: name
+      operators:
+        enableAll: true
+  graphql:
+    typeName: Db1_CategoriesBoolExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Categories
+  objectType: Categories
+  source:
+    dataConnectorName: app_connector
+    collection: categories
+  filterExpressionType: CategoriesBoolExp
+  orderableFields:
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: db1_categories
+    selectUniques:
+      - queryRootField: db1_categoriesById
+        uniqueIdentifier:
+          - id
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Categories
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

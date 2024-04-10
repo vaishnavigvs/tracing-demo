@@ -1,0 +1,24 @@
+# A SupergraphManifest defines how to build the Supergraph. 
+# It specifies where to locate the Supergraph and Subgraphs' metadata objects. 
+# You can create different SupergraphManifests for different Environments, like 
+# development, staging or production and each may reference different environment 
+# specific metadata objects if required. 
+# We have created this SupergraphManifest "base" by default to get you started.
+kind: SupergraphManifest
+version: v1
+definition:
+  name: base
+  envfile: base.env.yaml
+  # The default Environment to create the SupergraphBuild in when
+  # no Environment is explicitly specified. 
+  environment: dev
+
+  # Subgraphs are used to group your metadata objects together in a way 
+  # that makes sense for your application and your team. Multiple HML files can belong to a 
+  # Subgraph and you can have multiple Subgraphs in your Supergraph. We have created 
+  # the Subgraph "app" by default to get you started.
+  subgraphs:
+    - DB1
+    - DB2
+    - DB_apsouth
+  

@@ -1,0 +1,163 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Products
+  fields:
+    - name: category_id
+      type: Uuid!
+    - name: country_of_origin
+      type: Text!
+    - name: created_at
+      type: Timestamptz!
+    - name: description
+      type: Text!
+    - name: id
+      type: Uuid!
+    - name: image
+      type: Text!
+    - name: manufacturer_id
+      type: Uuid!
+    - name: name
+      type: Text!
+    - name: price
+      type: Int4!
+    - name: updated_at
+      type: Timestamptz!
+    - name: vector
+      type: Vector
+  graphql:
+    typeName: Db1_Products
+    inputTypeName: Db1_ProductsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: app_connector
+      dataConnectorObjectType: products
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Products
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - category_id
+          - country_of_origin
+          - created_at
+          - description
+          - id
+          - image
+          - manufacturer_id
+          - name
+          - price
+          - updated_at
+          - vector
+
+---
+kind: ObjectBooleanExpressionType
+version: v1
+definition:
+  name: ProductsBoolExp
+  objectType: Products
+  dataConnectorName: app_connector
+  dataConnectorObjectType: products
+  comparableFields:
+    - fieldName: category_id
+      operators:
+        enableAll: true
+    - fieldName: country_of_origin
+      operators:
+        enableAll: true
+    - fieldName: created_at
+      operators:
+        enableAll: true
+    - fieldName: description
+      operators:
+        enableAll: true
+    - fieldName: id
+      operators:
+        enableAll: true
+    - fieldName: image
+      operators:
+        enableAll: true
+    - fieldName: manufacturer_id
+      operators:
+        enableAll: true
+    - fieldName: name
+      operators:
+        enableAll: true
+    - fieldName: price
+      operators:
+        enableAll: true
+    - fieldName: updated_at
+      operators:
+        enableAll: true
+    - fieldName: vector
+      operators:
+        enableAll: true
+  graphql:
+    typeName: Db1_ProductsBoolExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Products
+  objectType: Products
+  source:
+    dataConnectorName: app_connector
+    collection: products
+  filterExpressionType: ProductsBoolExp
+  orderableFields:
+    - fieldName: category_id
+      orderByDirections:
+        enableAll: true
+    - fieldName: country_of_origin
+      orderByDirections:
+        enableAll: true
+    - fieldName: created_at
+      orderByDirections:
+        enableAll: true
+    - fieldName: description
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: image
+      orderByDirections:
+        enableAll: true
+    - fieldName: manufacturer_id
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: price
+      orderByDirections:
+        enableAll: true
+    - fieldName: updated_at
+      orderByDirections:
+        enableAll: true
+    - fieldName: vector
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: db1_products
+    selectUniques:
+      - queryRootField: db1_productsById
+        uniqueIdentifier:
+          - id
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Products
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

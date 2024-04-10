@@ -1,0 +1,136 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Coupons
+  fields:
+    - name: amount
+      type: Int4
+    - name: code
+      type: Text!
+    - name: created_at
+      type: Timestamptz!
+    - name: expiration_date
+      type: Timestamptz!
+    - name: id
+      type: Uuid!
+    - name: percent_or_value
+      type: Text
+    - name: updated_at
+      type: Timestamptz!
+    - name: user_id
+      type: Uuid!
+  graphql:
+    typeName: Db2_Coupons
+    inputTypeName: Db2_CouponsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: app_connector
+      dataConnectorObjectType: coupons
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Coupons
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - amount
+          - code
+          - created_at
+          - expiration_date
+          - id
+          - percent_or_value
+          - updated_at
+          - user_id
+
+---
+kind: ObjectBooleanExpressionType
+version: v1
+definition:
+  name: CouponsBoolExp
+  objectType: Coupons
+  dataConnectorName: app_connector
+  dataConnectorObjectType: coupons
+  comparableFields:
+    - fieldName: amount
+      operators:
+        enableAll: true
+    - fieldName: code
+      operators:
+        enableAll: true
+    - fieldName: created_at
+      operators:
+        enableAll: true
+    - fieldName: expiration_date
+      operators:
+        enableAll: true
+    - fieldName: id
+      operators:
+        enableAll: true
+    - fieldName: percent_or_value
+      operators:
+        enableAll: true
+    - fieldName: updated_at
+      operators:
+        enableAll: true
+    - fieldName: user_id
+      operators:
+        enableAll: true
+  graphql:
+    typeName: Db2_CouponsBoolExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Coupons
+  objectType: Coupons
+  source:
+    dataConnectorName: app_connector
+    collection: coupons
+  filterExpressionType: CouponsBoolExp
+  orderableFields:
+    - fieldName: amount
+      orderByDirections:
+        enableAll: true
+    - fieldName: code
+      orderByDirections:
+        enableAll: true
+    - fieldName: created_at
+      orderByDirections:
+        enableAll: true
+    - fieldName: expiration_date
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: percent_or_value
+      orderByDirections:
+        enableAll: true
+    - fieldName: updated_at
+      orderByDirections:
+        enableAll: true
+    - fieldName: user_id
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: db2_coupons
+    selectUniques:
+      - queryRootField: db2_couponsById
+        uniqueIdentifier:
+          - id
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Coupons
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

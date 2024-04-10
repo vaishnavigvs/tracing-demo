@@ -1,0 +1,109 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Notifications
+  fields:
+    - name: created_at
+      type: Timestamptz!
+    - name: id
+      type: Uuid!
+    - name: message
+      type: Text!
+    - name: updated_at
+      type: Timestamptz!
+    - name: user_id
+      type: Uuid!
+  graphql:
+    typeName: Db1_Notifications
+    inputTypeName: Db1_NotificationsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: app_connector
+      dataConnectorObjectType: notifications
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Notifications
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - created_at
+          - id
+          - message
+          - updated_at
+          - user_id
+
+---
+kind: ObjectBooleanExpressionType
+version: v1
+definition:
+  name: NotificationsBoolExp
+  objectType: Notifications
+  dataConnectorName: app_connector
+  dataConnectorObjectType: notifications
+  comparableFields:
+    - fieldName: created_at
+      operators:
+        enableAll: true
+    - fieldName: id
+      operators:
+        enableAll: true
+    - fieldName: message
+      operators:
+        enableAll: true
+    - fieldName: updated_at
+      operators:
+        enableAll: true
+    - fieldName: user_id
+      operators:
+        enableAll: true
+  graphql:
+    typeName: Db1_NotificationsBoolExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Notifications
+  objectType: Notifications
+  source:
+    dataConnectorName: app_connector
+    collection: notifications
+  filterExpressionType: NotificationsBoolExp
+  orderableFields:
+    - fieldName: created_at
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: message
+      orderByDirections:
+        enableAll: true
+    - fieldName: updated_at
+      orderByDirections:
+        enableAll: true
+    - fieldName: user_id
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: db1_notifications
+    selectUniques:
+      - queryRootField: db1_notificationsById
+        uniqueIdentifier:
+          - id
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Notifications
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

@@ -1,0 +1,16 @@
+kind: ConnectorManifest
+version: v1
+spec:
+  supergraphManifests:
+  - base
+definition:
+  name: app_connector
+  type: cloud
+  connector:
+    type: hub
+    name: hasura/postgres:v0.5.1
+  deployments:
+  - context: .
+    env:
+      CONNECTION_URI:
+        valueFromEnv: DB2_APP_CONNECTOR_CONNECTION_URI

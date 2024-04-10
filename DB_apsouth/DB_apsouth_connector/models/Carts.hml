@@ -1,0 +1,118 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Carts
+  fields:
+    - name: created_at
+      type: Timestamptz
+    - name: id
+      type: Uuid!
+    - name: is_complete
+      type: Bool!
+    - name: is_reminder_sent
+      type: Bool!
+    - name: updated_at
+      type: Timestamptz
+    - name: user_id
+      type: Uuid!
+  graphql:
+    typeName: DbApsouth_Carts
+    inputTypeName: DbApsouth_CartsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: DB_apsouth_connector
+      dataConnectorObjectType: carts
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Carts
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - created_at
+          - id
+          - is_complete
+          - is_reminder_sent
+          - updated_at
+          - user_id
+
+---
+kind: ObjectBooleanExpressionType
+version: v1
+definition:
+  name: CartsBoolExp
+  objectType: Carts
+  dataConnectorName: DB_apsouth_connector
+  dataConnectorObjectType: carts
+  comparableFields:
+    - fieldName: created_at
+      operators:
+        enableAll: true
+    - fieldName: id
+      operators:
+        enableAll: true
+    - fieldName: is_complete
+      operators:
+        enableAll: true
+    - fieldName: is_reminder_sent
+      operators:
+        enableAll: true
+    - fieldName: updated_at
+      operators:
+        enableAll: true
+    - fieldName: user_id
+      operators:
+        enableAll: true
+  graphql:
+    typeName: DbApsouth_CartsBoolExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Carts
+  objectType: Carts
+  source:
+    dataConnectorName: DB_apsouth_connector
+    collection: carts
+  filterExpressionType: CartsBoolExp
+  orderableFields:
+    - fieldName: created_at
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: is_complete
+      orderByDirections:
+        enableAll: true
+    - fieldName: is_reminder_sent
+      orderByDirections:
+        enableAll: true
+    - fieldName: updated_at
+      orderByDirections:
+        enableAll: true
+    - fieldName: user_id
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: dbApsouth_carts
+    selectUniques:
+      - queryRootField: dbApsouth_cartsById
+        uniqueIdentifier:
+          - id
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Carts
+  permissions:
+    - role: admin
+      select:
+        filter: null
+

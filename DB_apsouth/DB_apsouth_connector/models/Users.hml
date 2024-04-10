@@ -1,0 +1,145 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: Users
+  fields:
+    - name: created_at
+      type: Timestamptz!
+    - name: email
+      type: Text!
+    - name: favorite_artist
+      type: Int4
+    - name: id
+      type: Uuid!
+    - name: is_email_verified
+      type: Bool
+    - name: last_seen
+      type: Timestamptz
+    - name: name
+      type: Text!
+    - name: password
+      type: Text
+    - name: updated_at
+      type: Timestamptz!
+  graphql:
+    typeName: DbApsouth_Users
+    inputTypeName: DbApsouth_UsersInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: DB_apsouth_connector
+      dataConnectorObjectType: users
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: Users
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - created_at
+          - email
+          - favorite_artist
+          - id
+          - is_email_verified
+          - last_seen
+          - name
+          - password
+          - updated_at
+
+---
+kind: ObjectBooleanExpressionType
+version: v1
+definition:
+  name: UsersBoolExp
+  objectType: Users
+  dataConnectorName: DB_apsouth_connector
+  dataConnectorObjectType: users
+  comparableFields:
+    - fieldName: created_at
+      operators:
+        enableAll: true
+    - fieldName: email
+      operators:
+        enableAll: true
+    - fieldName: favorite_artist
+      operators:
+        enableAll: true
+    - fieldName: id
+      operators:
+        enableAll: true
+    - fieldName: is_email_verified
+      operators:
+        enableAll: true
+    - fieldName: last_seen
+      operators:
+        enableAll: true
+    - fieldName: name
+      operators:
+        enableAll: true
+    - fieldName: password
+      operators:
+        enableAll: true
+    - fieldName: updated_at
+      operators:
+        enableAll: true
+  graphql:
+    typeName: DbApsouth_UsersBoolExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: Users
+  objectType: Users
+  source:
+    dataConnectorName: DB_apsouth_connector
+    collection: users
+  filterExpressionType: UsersBoolExp
+  orderableFields:
+    - fieldName: created_at
+      orderByDirections:
+        enableAll: true
+    - fieldName: email
+      orderByDirections:
+        enableAll: true
+    - fieldName: favorite_artist
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: is_email_verified
+      orderByDirections:
+        enableAll: true
+    - fieldName: last_seen
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: password
+      orderByDirections:
+        enableAll: true
+    - fieldName: updated_at
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: dbApsouth_users
+    selectUniques:
+      - queryRootField: dbApsouth_usersById
+        uniqueIdentifier:
+          - id
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: Users
+  permissions:
+    - role: admin
+      select:
+        filter: null
+
